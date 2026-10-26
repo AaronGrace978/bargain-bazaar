@@ -1,0 +1,116 @@
+{
+  "version": "iwsdk.scene.v1",
+  "units": "meters",
+  "components": {
+    "com.iwsdk.components.DomeGradient": {
+      "sky": [0.02, 0.01, 0.06, 1],
+      "equator": [0.22, 0.08, 0.1, 1],
+      "ground": [0.04, 0.02, 0.03, 1],
+      "elevationDeg": 18,
+      "azimuthDeg": -20,
+      "dither": true
+    },
+    "com.iwsdk.components.IBLGradient": {
+      "sky": [0.18, 0.08, 0.12, 1],
+      "equator": [0.35, 0.16, 0.1, 1],
+      "ground": [0.05, 0.03, 0.04, 1],
+      "intensity": 0.45
+    }
+  },
+  "environment": {
+    "toneMapping": "aces",
+    "exposure": 1.1,
+    "shadows": true,
+    "shadowMapType": "pcf",
+    "fog": {
+      "type": "exponential",
+      "color": "#140810",
+      "density": 0.045
+    }
+  },
+  "player": {
+    "transform": {
+      "position": [0, 0, 0.2]
+    }
+  },
+  "authoring": {
+    "views": [
+      {
+        "id": "hero",
+        "role": "hero",
+        "projection": "perspective",
+        "position": [0, 1.24, 0.2],
+        "target": [0, 1.08, -0.85],
+        "fov": 70
+      }
+    ]
+  },
+  "resources": {},
+  "nodes": [
+    {
+      "id": "market-floor",
+      "name": "Market Floor",
+      "framingRole": "support",
+      "content": {
+        "type": "asset",
+        "asset": "market-floor",
+        "receiveShadow": true
+      },
+      "components": {
+        "DomeFade": {
+          "start": 3.2,
+          "end": 8
+        }
+      }
+    },
+    {
+      "id": "welcome-panel",
+      "name": "Welcome",
+      "content": {
+        "type": "asset",
+        "asset": "welcome-panel"
+      },
+      "transform": {
+        "position": [1.42, 1.15, -0.45],
+        "rotationDeg": [0, -62, 0],
+        "scale": 0.09
+      },
+      "components": {
+        "RayInteractable": {}
+      }
+    },
+    {
+      "id": "key-light",
+      "name": "Lantern Key",
+      "transform": {
+        "position": [-1.4, 3.2, 0.4],
+        "rotationDeg": [-62, -24, 0]
+      },
+      "components": {
+        "DirectionalLight": {
+          "color": [1, 0.78, 0.55, 1],
+          "intensity": 1.15,
+          "castShadow": true,
+          "shadowMapSize": "2048",
+          "shadowCameraSize": 6,
+          "shadowCameraNear": 0.5,
+          "shadowCameraFar": 12,
+          "shadowRadius": 6,
+          "shadowBias": -0.0004,
+          "shadowNormalBias": 0.02
+        }
+      }
+    },
+    {
+      "id": "fill-light",
+      "name": "Night Fill",
+      "components": {
+        "HemisphereLight": {
+          "skyColor": [0.22, 0.16, 0.38, 1],
+          "groundColor": [0.18, 0.05, 0.06, 1],
+          "intensity": 0.55
+        }
+      }
+    }
+  ]
+}

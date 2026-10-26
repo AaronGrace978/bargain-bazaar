@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta
+      name="description"
+      content="Bargain Bazaar is a seated, hands-first WebXR haggling game. Your deals train a merchant spirit that keeps trading after the headset comes off."
+    />
+    <title>Bargain Bazaar</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <div id="scene-container"></div>
+    <header id="topbar">
+      <h1>Bargain Bazaar</h1>
+      <p id="shift-readout">Shift 10:00</p>
+      <p id="jain-readout">Jain --</p>
+      <p id="phase-readout">Make an offer</p>
+    </header>
+    <footer id="dock">
+      <label class="hint" for="offer-slider">Offer bead</label>
+      <input id="offer-slider" type="range" min="1" max="200" value="100" />
+      <button type="button" data-act="offer">Pinch offer</button>
+      <button type="button" data-act="palm">Open palm</button>
+      <button type="button" data-act="seal">Handshake</button>
+      <button type="button" data-act="walk">Walk away</button>
+      <button type="button" data-act="away">Step away</button>
+      <button id="enter-xr" type="button">Enter XR</button>
+      <p class="hint">F offer, C palm, H clasp, X leave, M away. 1 2 3 switch merchants.</p>
+    </footer>
+    <script type="module" src="/src/index.ts"></script>
+  </body>
+</html>

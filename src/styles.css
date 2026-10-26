@@ -1,0 +1,127 @@
+@font-face {
+  font-family: Fraunces;
+  src: url('./fonts/fraunces-600.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Outfit;
+  src: url('./fonts/outfit-500.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --ink: #140810;
+  --panel: rgba(18, 9, 16, 0.88);
+  --brass: #e7c27a;
+  --paper: #f7f1e4;
+  --cinnabar: #c4373a;
+  --teal: #9af0dd;
+}
+
+html,
+body,
+#scene-container {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--ink);
+}
+
+body {
+  overflow: hidden;
+  font-family: Outfit, sans-serif;
+  color: var(--paper);
+}
+
+#scene-container {
+  position: fixed;
+  inset: 0;
+}
+
+#topbar,
+#dock {
+  position: fixed;
+  z-index: 2;
+  left: 16px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--panel);
+  border: 1px solid rgba(231, 194, 122, 0.7);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+}
+
+#topbar {
+  top: 12px;
+  right: auto;
+  max-width: calc(50vw - 90px);
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
+#dock {
+  bottom: 12px;
+  flex-wrap: wrap;
+}
+
+h1 {
+  margin: 0;
+  font-family: Fraunces, Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+#shift-readout,
+#jain-readout,
+#phase-readout,
+.hint {
+  margin: 0;
+  font-size: 14px;
+  color: var(--brass);
+}
+
+#jain-readout {
+  color: var(--teal);
+}
+
+button,
+#enter-xr {
+  font: inherit;
+  color: var(--ink);
+  background: var(--brass);
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+button:hover,
+#enter-xr:hover {
+  background: #f3dca4;
+}
+
+#offer-slider {
+  flex: 1 1 180px;
+  accent-color: var(--cinnabar);
+}
+
+.hint {
+  flex: 1 1 220px;
+}
+
+html.bare #topbar,
+html.bare #dock,
+body.xr #topbar,
+body.xr #dock {
+  display: none;
+}
