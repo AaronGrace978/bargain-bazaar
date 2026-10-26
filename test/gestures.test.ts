@@ -63,6 +63,19 @@ test('pinch fires once on the rising edge and a held palm fires once', () => {
   assert.equal(step.fired, null);
 });
 
+test('a new pose held through the cooldown still fires once', () => {
+  let step = stepGestureTracker(createGestureTracker(), 'open-palm', 0.3);
+  step = stepGestureTracker(step.state, 'open-palm', 0.3);
+  assert.equal(step.fired, 'open-palm');
+  step = stepGestureTracker(step.state, 'walk-away', 0.1);
+  const fired: (string | null)[] = [];
+  for (let i = 0; i < 30; i++) {
+    step = stepGestureTracker(step.state, 'walk-away', 0.1);
+    fired.push(step.fired);
+  }
+  assert.deepEqual(fired.filter(Boolean), ['walk-away']);
+});
+
 test('a suppressed pinch does not offer while the bead is held', () => {
   const tracker = createGestureTracker();
   const step = stepGestureTracker(tracker, 'pinch', 0.016, true);

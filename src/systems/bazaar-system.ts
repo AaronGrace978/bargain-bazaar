@@ -83,6 +83,8 @@ export class BazaarSystem extends createSystem({
         merchant: this.session.active.id,
         offer: this.session.offer,
         ask: this.session.ask,
+        bounds: offerBounds(this.session),
+        fairValue: this.session.artifact.fairValue,
         gesture: this.tracker.gesture,
         hands: this.lastHands,
         spirit: this.session.spirit,

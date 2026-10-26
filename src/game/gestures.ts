@@ -48,10 +48,10 @@ export function classifyGesture(left: HandSample, right: HandSample): GestureId 
   // Palm gestures only count above the cloth, so a hand resting in the lap
   // cannot storm off or counter by accident.
   const raised = hands.filter((hand) => hand.wristY > RAISED_WRIST_Y);
-  if (raised.some((hand) => hand.curl < 0.45 && hand.pinch < 0.55 && hand.palmFacing < -0.35)) {
+  if (raised.some((hand) => hand.curl < 0.45 && hand.pinch < 0.55 && hand.palmFacing < -0.6)) {
     return 'walk-away';
   }
-  if (raised.some((hand) => hand.curl < 0.45 && hand.pinch < 0.5 && hand.palmFacing > 0.45)) {
+  if (raised.some((hand) => hand.curl < 0.45 && hand.pinch < 0.5 && hand.palmFacing > 0.6)) {
     return 'open-palm';
   }
   if (hands.some((hand) => hand.pinch > 0.82)) return 'pinch';
@@ -80,10 +80,15 @@ export function stepGestureTracker(
   }
 
   const hold = state.hold + dt;
-  if (next === 'pinch' || next === 'none' || cooldown > 0) {
+  if (next === 'pinch' || next === 'none') {
     return { state: { gesture: next, hold, cooldown }, fired: null };
   }
   const needed = HOLD_SECONDS[next];
+  // A pose that has not fired yet only starts counting once the cooldown is
+  // over; otherwise it crosses its threshold during the cooldown and never fires.
+  if (cooldown > 0) {
+    return { state: { gesture: next, hold: state.hold >= needed ? hold : 0, cooldown }, fired: null };
+  }
   if (state.hold < needed && hold >= needed) {
     return {
       state: { gesture: next, hold, cooldown: 0.75 },
