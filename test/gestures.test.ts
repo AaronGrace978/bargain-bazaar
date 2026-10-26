@@ -22,6 +22,11 @@ function hand(patch: Partial<HandSample>): HandSample {
 
 const idle = hand({ tracked: false });
 
+test('palm gestures ignore a hand resting below the cloth', () => {
+  assert.equal(classifyGesture(idle, hand({ palmFacing: -0.8, wristY: 0.6 })), 'none');
+  assert.equal(classifyGesture(idle, hand({ palmFacing: 0.8, wristY: 0.6 })), 'none');
+});
+
 test('classifies the four stall gestures', () => {
   assert.equal(classifyGesture(idle, hand({ pinch: 0.9, curl: 0.4 })), 'pinch');
   assert.equal(

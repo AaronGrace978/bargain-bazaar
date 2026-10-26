@@ -25,6 +25,9 @@ const HOLD_SECONDS: Record<Exclude<GestureId, 'pinch' | 'none'>, number> = {
   'walk-away': 0.4,
 };
 
+/** Metres above the floor; the cloth sits at 0.74 in a seated local-floor space. */
+export const RAISED_WRIST_Y = 0.86;
+
 export function createGestureTracker(): GestureTracker {
   return { gesture: 'none', hold: 0, cooldown: 0 };
 }
@@ -42,10 +45,13 @@ export function classifyGesture(left: HandSample, right: HandSample): GestureId 
   }
 
   const hands = [left, right].filter((hand) => hand.tracked);
-  if (hands.some((hand) => hand.curl < 0.45 && hand.pinch < 0.55 && hand.palmFacing < -0.35)) {
+  // Palm gestures only count above the cloth, so a hand resting in the lap
+  // cannot storm off or counter by accident.
+  const raised = hands.filter((hand) => hand.wristY > RAISED_WRIST_Y);
+  if (raised.some((hand) => hand.curl < 0.45 && hand.pinch < 0.55 && hand.palmFacing < -0.35)) {
     return 'walk-away';
   }
-  if (hands.some((hand) => hand.curl < 0.45 && hand.pinch < 0.5 && hand.palmFacing > 0.45)) {
+  if (raised.some((hand) => hand.curl < 0.45 && hand.pinch < 0.5 && hand.palmFacing > 0.45)) {
     return 'open-palm';
   }
   if (hands.some((hand) => hand.pinch > 0.82)) return 'pinch';
